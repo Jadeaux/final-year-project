@@ -1,0 +1,666 @@
+
+
+#---------------------HOLE PERCENTAGE-------------------------------
+"""
+Data used to find the hole percentage means for each letter, to help set thresholds for the CRAMM classification rules.
+"""
+
+A        8.543650   8.601406  0.0   38.341969
+R       11.219218  10.720471  0.0   43.718593
+P       19.316897  13.350474  0.0   66.883117
+B       28.159715  18.187407  0.0   98.260870
+O       36.092752  24.338332  0.0  139.896373
+D       41.404879  27.491350  0.0  109.248555
+Q       47.518861  26.817696  0.0  105.045872
+
+
+
+#---------------------ENDPOINTS-------------------------------
+
+"""=== Endpoint COUNT distribution (counts) ==="""
+
+     0    1    2    3    4  5+  total
+A    0    5  100   66   27   2    200
+B   70   56   46   25    3   0    200
+C    1    2  185   11    1   0    200
+D   58   80   49   12    1   0    200
+E    0    3   19  124   45   9    200
+F    0    4   10  107   76   3    200
+G    1   22   96   74    7   0    200
+H    0    0    0   13  146  41    200
+I    0    0  165    9   24   2    200
+J    0    0   68  129    3   0    200
+K    0    0    0    7  189   4    200
+L    0    0  136   62    2   0    200
+M    0    0   16   97   73  14    200
+N    0    0   41  105   49   5    200
+O  166   18   16    0    0   0    200
+P    2  141   41   15    1   0    200
+Q    9   77   86   19    9   0    200
+R    0    6  127   56   10   1    200
+S    1    8  143   40    7   1    200
+T    0    0    9  185    6   0    200
+U    0    0   85  107    8   0    200
+V    0    0   82  113    5   0    200
+W    0    1   19  100   54  26    200
+X    0    0    0    2  196   2    200
+Y    0    1    8  190    1   0    200
+Z    0    0   57   71   61  11    200
+
+
+ """== Endpoint COUNT distribution (row %) ==="""
+      0     1     2     3     4    5+  total
+A   0.0   2.5  50.0  33.0  13.5   1.0    200
+B  35.0  28.0  23.0  12.5   1.5   0.0    200
+C   0.5   1.0  92.5   5.5   0.5   0.0    200
+D  29.0  40.0  24.5   6.0   0.5   0.0    200
+E   0.0   1.5   9.5  62.0  22.5   4.5    200
+F   0.0   2.0   5.0  53.5  38.0   1.5    200
+G   0.5  11.0  48.0  37.0   3.5   0.0    200
+H   0.0   0.0   0.0   6.5  73.0  20.5    200
+I   0.0   0.0  82.5   4.5  12.0   1.0    200
+J   0.0   0.0  34.0  64.5   1.5   0.0    200
+K   0.0   0.0   0.0   3.5  94.5   2.0    200
+L   0.0   0.0  68.0  31.0   1.0   0.0    200
+M   0.0   0.0   8.0  48.5  36.5   7.0    200
+N   0.0   0.0  20.5  52.5  24.5   2.5    200
+O  83.0   9.0   8.0   0.0   0.0   0.0    200
+P   1.0  70.5  20.5   7.5   0.5   0.0    200
+Q   4.5  38.5  43.0   9.5   4.5   0.0    200
+R   0.0   3.0  63.5  28.0   5.0   0.5    200
+S   0.5   4.0  71.5  20.0   3.5   0.5    200
+T   0.0   0.0   4.5  92.5   3.0   0.0    200
+U   0.0   0.0  42.5  53.5   4.0   0.0    200
+V   0.0   0.0  41.0  56.5   2.5   0.0    200
+W   0.0   0.5   9.5  50.0  27.0  13.0    200
+X   0.0   0.0   0.0   1.0  98.0   1.0    200
+Y   0.0   0.5   4.0  95.0   0.5   0.0    200
+Z   0.0   0.0  28.5  35.5  30.5   5.5    200
+
+
+"""Total accuracy ≈ 63.8%"""
+
+#-----------------BLOB COUNT---------------------
+
+'''=== Hole COUNT distribution (counts) === '''
+     0    1    2  3+  total
+A   53  146    1   0    200
+B   15   66  117   2    200
+C  197    3    0   0    200
+D   23  176    1   0    200
+E  188   11    1   0    200
+F  190   10    0   0    200
+G  143   53    3   1    200
+H  196    3    1   0    200
+I  200    0    0   0    200
+J  197    3    0   0    200
+K  200    0    0   0    200
+L  200    0    0   0    200
+M  199    1    0   0    200
+N  200    0    0   0    200
+O   13  185    2   0    200
+P   23  175    2   0    200
+Q   17  154   29   0    200
+R   53  147    0   0    200
+S  190    9    1   0    200
+T  200    0    0   0    200
+U  200    0    0   0    200
+V  200    0    0   0    200
+W  198    1    1   0    200
+X  200    0    0   0    200
+Y  198    2    0   0    200
+Z  200    0    0   0    200
+
+'''=== Hole COUNT distribution (row %) === ''''
+       0     1     2   3+  total
+A   26.5  73.0   0.5  0.0    200
+B    7.5  33.0  58.5  1.0    200
+C   98.5   1.5   0.0  0.0    200
+D   11.5  88.0   0.5  0.0    200
+E   94.0   5.5   0.5  0.0    200
+F   95.0   5.0   0.0  0.0    200
+G   71.5  26.5   1.5  0.5    200
+H   98.0   1.5   0.5  0.0    200
+I  100.0   0.0   0.0  0.0    200
+J   98.5   1.5   0.0  0.0    200
+K  100.0   0.0   0.0  0.0    200
+L  100.0   0.0   0.0  0.0    200
+M   99.5   0.5   0.0  0.0    200
+N  100.0   0.0   0.0  0.0    200
+O    6.5  92.5   1.0  0.0    200
+P   11.5  87.5   1.0  0.0    200
+Q    8.5  77.0  14.5  0.0    200
+R   26.5  73.5   0.0  0.0    200
+S   95.0   4.5   0.5  0.0    200
+T  100.0   0.0   0.0  0.0    200
+U  100.0   0.0   0.0  0.0    200
+V  100.0   0.0   0.0  0.0    200
+W   99.0   0.5   0.5  0.0    200
+X  100.0   0.0   0.0  0.0    200
+Y   99.0   1.0   0.0  0.0    200
+Z  100.0   0.0   0.0  0.0    200
+
+'''
+For blobbed characters: 81.9% accuracy
+--->  B has 58.5% with 2 holes, due to emnist samples being noisy
+For non-blobbed characters: 97.37% accuracy
+'''
+
+#-----------------SYMMETRY---------------------
+
+'''=== Symmetry score per letter (mean/std) ==='''
+            mean       std
+letter
+O       0.941942  0.044084
+H       0.926972  0.060748
+B       0.895840  0.088139
+U       0.894456  0.085224
+N       0.891816  0.081343
+M       0.891094  0.084037
+X       0.887215  0.096897
+Q       0.884380  0.070305
+D       0.877373  0.085200
+G       0.867669  0.111854
+I       0.863536  0.112856
+N       0.891816  0.081343
+M       0.891094  0.084037
+X       0.887215  0.096897
+Q       0.884380  0.070305
+D       0.877373  0.085200
+G       0.867669  0.111854
+I       0.863536  0.112856
+D       0.877373  0.085200
+G       0.867669  0.111854
+I       0.863536  0.112856
+G       0.867669  0.111854
+I       0.863536  0.112856
+S       0.862123  0.113311
+Z       0.855434  0.120182
+R       0.853670  0.108334
+W       0.840635  0.112605
+P       0.799291  0.106064
+K       0.797134  0.125092
+A       0.796413  0.127113
+C       0.795480  0.126119
+V       0.774216  0.124009
+W       0.840635  0.112605
+P       0.799291  0.106064
+K       0.797134  0.125092
+A       0.796413  0.127113
+C       0.795480  0.126119
+V       0.774216  0.124009
+P       0.799291  0.106064
+K       0.797134  0.125092
+A       0.796413  0.127113
+C       0.795480  0.126119
+V       0.774216  0.124009
+K       0.797134  0.125092
+A       0.796413  0.127113
+C       0.795480  0.126119
+V       0.774216  0.124009
+C       0.795480  0.126119
+V       0.774216  0.124009
+V       0.774216  0.124009
+J       0.763469  0.154354
+E       0.752208  0.122894
+F       0.747276  0.151913
+Y       0.742776  0.148034
+T       0.676529  0.143849
+L       0.633569  0.181143
+
+
+# ------------------HORIZONTAL AND VERTICAL LINES ---------------------
+# 
+# === VERTICAL LINE COUNT distribution (counts) ===
+     0    1   2  3+  total
+A   52   98  45   5    200
+B   78   90  29   3    200
+C   77  115   8   0    200
+D   48  107  44   1    200
+E   92   91  17   0    200
+F   77  116   6   1    200
+G   97   91  10   2    200
+H   61   53  76  10    200
+I   85  110   5   0    200
+J   57  141   1   1    200
+K   60  130   9   1    200
+L   87  107   6   0    200
+M   13   59  75  53    200
+N   72   81  43   4    200
+O   31   99  69   1    200
+P   89  103   8   0    200
+Q   82   77  41   0    200
+R  105   79  14   2    200
+S  167   30   2   1    200
+T   80  116   4   0    200
+U   49   74  77   0    200
+V   72  117  10   1    200
+W   24   93  55  28    200
+X  162   38   0   0    200
+Y  130   65   5   0    200
+Z  173   22   5   0    200
+
+=== VERTICAL LINE COUNT distribution (row %) ===
+      0     1     2    3+  total
+A  26.0  49.0  22.5   2.5    200
+B  39.0  45.0  14.5   1.5    200
+C  38.5  57.5   4.0   0.0    200
+D  24.0  53.5  22.0   0.5    200
+E  46.0  45.5   8.5   0.0    200
+F  38.5  58.0   3.0   0.5    200
+G  48.5  45.5   5.0   1.0    200
+H  30.5  26.5  38.0   5.0    200
+I  42.5  55.0   2.5   0.0    200
+J  28.5  70.5   0.5   0.5    200
+K  30.0  65.0   4.5   0.5    200
+L  43.5  53.5   3.0   0.0    200
+M   6.5  29.5  37.5  26.5    200
+N  36.0  40.5  21.5   2.0    200
+O  15.5  49.5  34.5   0.5    200
+P  44.5  51.5   4.0   0.0    200
+Q  41.0  38.5  20.5   0.0    200
+R  52.5  39.5   7.0   1.0    200
+S  83.5  15.0   1.0   0.5    200
+T  40.0  58.0   2.0   0.0    200
+U  24.5  37.0  38.5   0.0    200
+V  36.0  58.5   5.0   0.5    200
+W  12.0  46.5  27.5  14.0    200
+X  81.0  19.0   0.0   0.0    200
+Y  65.0  32.5   2.5   0.0    200
+Z  86.5  11.0   2.5   0.0    200
+
+Exact vertical-line count accuracy ≈ 48.6%
+
+=== HORIZONTAL LINE COUNT distribution (counts) ===
+     0    1    2  3+  total
+A   59  121   20   0    200
+B   22   59   64  55    200
+C   31  107   62   0    200
+D   42  101   56   1    200
+E    8   54   70  68    200
+F   16   94   89   1    200
+G   28   84   65  23    200
+H   24  172    4   0    200
+I   81  101   16   2    200
+J   37  131   31   1    200
+K  124   74    0   2    200
+L   18  179    3   0    200
+M  149   51    0   0    200
+N  185   15    0   0    200
+O   36   99   65   0    200
+P   29   84   86   1    200
+Q   42   99   58   1    200
+R   74   79   44   3    200
+S   22   90   69  19    200
+T   31  158   11   0    200
+U  114   84    2   0    200
+V  178   22    0   0    200
+W  178   21    1   0    200
+X  182   16    2   0    200
+Y  138   59    3   0    200
+Z    6   57  131   6    200
+
+
+=== HORIZONTAL LINE COUNT distribution (row %) ===
+      0     1     2    3+  total
+A  29.5  60.5  10.0   0.0    200
+B  11.0  29.5  32.0  27.5    200
+C  15.5  53.5  31.0   0.0    200
+D  21.0  50.5  28.0   0.5    200
+E   4.0  27.0  35.0  34.0    200
+F   8.0  47.0  44.5   0.5    200
+G  14.0  42.0  32.5  11.5    200
+H  12.0  86.0   2.0   0.0    200
+I  40.5  50.5   8.0   1.0    200
+J  18.5  65.5  15.5   0.5    200
+K  62.0  37.0   0.0   1.0    200
+L   9.0  89.5   1.5   0.0    200
+M  74.5  25.5   0.0   0.0    200
+N  92.5   7.5   0.0   0.0    200
+O  18.0  49.5  32.5   0.0    200
+P  14.5  42.0  43.0   0.5    200
+Q  21.0  49.5  29.0   0.5    200
+R  37.0  39.5  22.0   1.5    200
+S  11.0  45.0  34.5   9.5    200
+T  15.5  79.0   5.5   0.0    200
+U  57.0  42.0   1.0   0.0    200
+V  89.0  11.0   0.0   0.0    200
+W  89.0  10.5   0.5   0.0    200
+X  91.0   8.0   1.0   0.0    200
+Y  69.0  29.5   1.5   0.0    200
+Z   3.0  28.5  65.5   3.0    200 
+
+"""
+~30–45% for complex letters (E, F)
+
+~80–90% for simple 1-line letters
+
+~65% for 2-line letters like Z
+"""
+
+
+
+#-----------------CLASSIFICATION RESULTS---------------------
+
+Letter  Samples  Correct  Accuracy_%
+     A      200       17         8.5
+     B      200      120        60.0
+     C      200        0         0.0
+     D      200       47        23.5
+     E      200      137        68.5
+     F      200        9         4.5
+     G      200        0         0.0
+     H      200       85        42.5
+     I      200        0         0.0
+     J      200        0         0.0
+     K      200      125        62.5
+     L      200        0         0.0
+     M      200        5         2.5
+     N      200        0         0.0
+     O      200       26        13.0
+     P      200      106        53.0
+     Q      200      131        65.5
+     R      200      128        64.0
+     S      200        0         0.0
+     T      200      143        71.5
+     U      200        0         0.0
+     V      200        0         0.0
+     W      200        0         0.0
+     X      200      157        78.5
+     Y      200       37        18.5
+     Z      200        0         0.0
+
+
+
+
+
+
+
+
+################################################
+
+True label: A
+Predicted: A
+Bottom width ratio: 0.705
+Hole count: 1 | Largest hole %: 8.26
+Endpoints(after prune): 4
+Vertical symmetry score: 0.977
+Horizontal symmetry score: 0.905
+vlines: 2 | hlines: 1
+north=0.964 | south=0.245
+Vertical symmetry score: 0.977
+Clusters (x_start..x_end): height, kept?
+  #0: [ 24.. 56] height=298  keep=True
+  #1: [ 88..126] height=296  keep=True
+Top columns by best_run:
+  x= 45 best=298 raw=1 pre=1 score=0.333
+  x= 46 best=297 raw=1 pre=1 score=0.333
+  x= 44 best=296 raw=1 pre=1 score=0.333
+  x=109 best=296 raw=1 pre=1 score=0.333
+  x=108 best=295 raw=1 pre=1 score=0.500
+  x= 47 best=295 raw=1 pre=1 score=0.333
+  x= 42 best=294 raw=1 pre=1 score=0.333
+  x=107 best=294 raw=1 pre=1 score=0.500
+Runs (y_start..y_end): best_width(max), mean_score, kept?
+  #0: [190..228] best_width=137 mean_score=0.333 kept=True
+Processing: C:\Users\jadsa\GitRepos\final-year-project-jad\images\letters\letterB.png True label: B
+True label: B
+Predicted: B
+Bottom width ratio: 1.0
+Hole count: 2 | Largest hole %: 26.74
+Endpoints(after prune): 2
+Vertical symmetry score: 0.96
+Horizontal symmetry score: 0.997
+vlines: 2 | hlines: 3
+north=0.622 | south=0.178
+Vertical symmetry score: 0.96
+Traceback (most recent call last):
+  File "c:\Users\jadsa\GitRepos\final-year-project-jad\modules\run_letters_license.py", line 116, in <module>
+    debug_vertical_strokes(A, min_frac=0.6, gap_allow=2, support_cols=3, orient_thresh=0.12)
+  File "c:\Users\jadsa\GitRepos\final-year-project-jad\modules\features_letters.py", line 1457, in debug_vertical_strokes
+    plt.show()
+  File "C:\Users\jadsa\AppData\Local\Programs\Python\Python312\Lib\site-packages\matplotlib\pyplot.py", line 614, in show
+    return _get_backend_mod().show(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\jadsa\AppData\Local\Programs\Python\Python312\Lib\site-packages\matplotlib\backend_bases.py", line 3547, in show
+    cls.mainloop()
+  File "C:\Users\jadsa\AppData\Local\Programs\Python\Python312\Lib\site-packages\matplotlib\backends\_backend_tk.py", line 544, in start_main_loop
+    first_manager.window.mainloop()
+  File "C:\Users\jadsa\AppData\Local\Programs\Python\Python312\Lib\tkinter\__init__.py", line 1485, in mainloop
+    self.tk.mainloop(n)
+KeyboardInterrupt
+PS C:\Users\jadsa\GitRepos\final-year-project-jad> & C:\Users\jadsa\AppData\Local\Programs\Python\Python312\python.exe c:/Users/jadsa/GitRepos/final-year-project-jad/modules/run_letters_license.py
+Processing: C:\Users\jadsa\GitRepos\final-year-project-jad\images\letters\letterA.png True label: A
+True label: A
+Predicted: A
+Bottom width ratio: 0.705
+vlines: 2 | hlines: 1
+Processing: C:\Users\jadsa\GitRepos\final-year-project-jad\images\letters\letterB.png True label: B
+True label: B
+Predicted: B
+Bottom width ratio: 1.0
+vlines: 2 | hlines: 3
+Processing: C:\Users\jadsa\GitRepos\final-year-project-jad\images\letters\letterC.png True label: C
+[e==2] VS=0.686 HS=0.992 vstroke=1 north=0.735 south=0.206
+True label: C
+Predicted: C
+Bottom width ratio: 0.985
+vlines: 1 | hlines: 2
+Processing: C:\Users\jadsa\GitRepos\final-year-project-jad\images\letters\letterD.png True label: D
+True label: D
+Predicted: D
+Bottom width ratio: 0.972
+vlines: 2 | hlines: 2
+Processing: C:\Users\jadsa\GitRepos\final-year-project-jad\images\letters\letterE.png True label: E
+True label: E
+Predicted: E
+Bottom width ratio: 0.992
+vlines: 1 | hlines: 3
+Processing: C:\Users\jadsa\GitRepos\final-year-project-jad\images\letters\letterF.png True label: F
+True label: F
+Predicted: F
+Bottom width ratio: 0.207
+vlines: 1 | hlines: 1
+Processing: C:\Users\jadsa\GitRepos\final-year-project-jad\images\letters\letterG.png True label: G
+[e==2] VS=0.911 HS=0.843 vstroke=1 north=0.753 south=0.727
+True label: G
+Predicted: G
+Bottom width ratio: 0.985
+vlines: 1 | hlines: 2
+Processing: C:\Users\jadsa\GitRepos\final-year-project-jad\images\letters\letterH.png True label: H
+True label: H
+Predicted: H
+Bottom width ratio: 0.528
+vlines: 2 | hlines: 1
+Processing: C:\Users\jadsa\GitRepos\final-year-project-jad\images\letters\letterI.png True label: I
+True label: I
+Predicted: I
+Bottom width ratio: 0.977
+vlines: 1 | hlines: 2
+Processing: C:\Users\jadsa\GitRepos\final-year-project-jad\images\letters\letterJ.png True label: J
+[e==2] VS=0.465 HS=0.746 vstroke=1 north=0.889 south=0.211
+True label: J
+Predicted: J
+Bottom width ratio: 0.989
+vlines: 1 | hlines: 1
+Processing: C:\Users\jadsa\GitRepos\final-year-project-jad\images\letters\letterK.png True label: K
+True label: K
+Predicted: K
+Bottom width ratio: 0.776
+vlines: 1 | hlines: 0
+Processing: C:\Users\jadsa\GitRepos\final-year-project-jad\images\letters\letterL.png True label: L
+[e==2] VS=0.309 HS=0.798 vstroke=1 north=0.954 south=0.136
+True label: L
+Predicted: L
+Bottom width ratio: 1.0
+vlines: 1 | hlines: 1
+Processing: C:\Users\jadsa\GitRepos\final-year-project-jad\images\letters\letterM.png True label: M
+[e>=5] e=5 north=0.958 south=0.955 vs=0.992
+True label: M
+Predicted: M
+Bottom width ratio: 0.504
+vlines: 2 | hlines: 1
+Processing: C:\Users\jadsa\GitRepos\final-year-project-jad\images\letters\letterN.png True label: N
+True label: N
+Predicted: N
+Bottom width ratio: 0.602
+vlines: 2 | hlines: 0
+Processing: C:\Users\jadsa\GitRepos\final-year-project-jad\images\letters\letterO.png True label: O
+True label: O
+Predicted: O
+Bottom width ratio: 0.993
+vlines: 2 | hlines: 2
+Processing: C:\Users\jadsa\GitRepos\final-year-project-jad\images\letters\letterP.png True label: P
+True label: P
+Predicted: P
+Bottom width ratio: 0.267
+vlines: 1 | hlines: 2
+Processing: C:\Users\jadsa\GitRepos\final-year-project-jad\images\letters\letterQ.png True label: Q
+True label: Q
+Predicted: D
+Bottom width ratio: 0.806
+vlines: 2 | hlines: 2
+Processing: C:\Users\jadsa\GitRepos\final-year-project-jad\images\letters\letterR.png True label: R
+True label: R
+Predicted: R
+Bottom width ratio: 0.649
+vlines: 1 | hlines: 2
+Processing: C:\Users\jadsa\GitRepos\final-year-project-jad\images\letters\letterS.png True label: S
+[e==2] VS=0.933 HS=0.894 vstroke=0 north=0.766 south=0.210
+True label: S
+Predicted: Z
+Bottom width ratio: 0.991
+vlines: 0 | hlines: 1
+Processing: C:\Users\jadsa\GitRepos\final-year-project-jad\images\letters\letterT.png True label: T
+True label: T
+Predicted: T
+Bottom width ratio: 0.252
+vlines: 1 | hlines: 1
+Processing: C:\Users\jadsa\GitRepos\final-year-project-jad\images\letters\letterU.png True label: U
+[e==2] VS=0.984 HS=0.955 vstroke=2 north=0.873 south=0.210
+[e==2|SYM] bottom_width_ratio=0.993
+True label: U
+Predicted: U
+Bottom width ratio: 0.993
+vlines: 2 | hlines: 1
+Processing: C:\Users\jadsa\GitRepos\final-year-project-jad\images\letters\letterV.png True label: V
+True label: V
+Predicted: V
+Bottom width ratio: 0.391
+vlines: 2 | hlines: 0
+Processing: C:\Users\jadsa\GitRepos\final-year-project-jad\images\letters\letterW.png True label: W
+[e>=5] e=5 north=0.503 south=0.942 vs=0.998
+True label: W
+Predicted: W
+Bottom width ratio: 0.683
+vlines: 2 | hlines: 1
+Processing: C:\Users\jadsa\GitRepos\final-year-project-jad\images\letters\letterX.png True label: X
+True label: X
+Predicted: N
+Bottom width ratio: 0.788
+vlines: 2 | hlines: 0
+Processing: C:\Users\jadsa\GitRepos\final-year-project-jad\images\letters\letterY.png True label: Y
+True label: Y
+Predicted: Y
+Bottom width ratio: 0.234
+vlines: 1 | hlines: 0
+Processing: C:\Users\jadsa\GitRepos\final-year-project-jad\images\letters\letterZ.png True label: Z
+[e==2] VS=0.998 HS=0.973 vstroke=0 north=0.890 south=0.883
+[e==2|SYM] bottom_width_ratio=0.979
+True label: Z
+Predicted: U
+Bottom width ratio: 0.979
+vlines: 0 | hlines: 2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---------------------------NUMBERS---------------------------
+
+
+[DEBUG] Stem counts for 1-blob samples (using current get_stems):
+Digit 0: total 1-blob samples = 247
+    stems=0: 247 (100.0%)
+Digit 4: total 1-blob samples = 21
+    stems=0: 4 (19.0%)
+    stems=1: 14 (66.7%)
+    stems=2: 3 (14.3%)
+Digit 6: total 1-blob samples = 229
+    stems=0: 4 (1.7%)
+    stems=1: 222 (96.9%)
+    stems=2: 3 (1.3%)
+Digit 8: total 1-blob samples = 125
+    stems=0: 21 (16.8%)
+    stems=1: 93 (74.4%)
+    stems=2: 11 (8.8%)
+Digit 9: total 1-blob samples = 244
+    stems=0: 27 (11.1%)
+    stems=1: 217 (88.9%)
+
+Confusion Matrix (rows = true, cols = predicted):
+      0  1  2  3  4  5  6  7  8  9
+0: 753   4  10   0 197   8   2   4   2   0
+1:   0 1112   2   5   7   6   0   3   0   0
+2:   3  23 391 307  19   8 174 100   0   7
+3:   1  22  68 303   6 140  15 436   0  19
+4:  20 407  10   2 333 172   0  12   0  26
+5:   2 104   2  27  35 660  18  31   0  13
+6:   9  42   0   0 329   3 567   0   5   3
+7:   0  64  49  72  10  22   1 810   0   0
+8:  73  45   6   4  82  29 218   1 439  76
+9:  91 107  10  11  62  83   0  68   1 576
+
+Per-digit performance:
+Digit 0: total= 980, correct= 753, accuracy= 76.84%
+Digit 1: total=1135, correct=1112, accuracy= 97.97%
+Digit 2: total=1032, correct= 391, accuracy= 37.89%
+Digit 3: total=1010, correct= 303, accuracy= 30.00%
+Digit 4: total= 982, correct= 333, accuracy= 33.91%
+Digit 5: total= 892, correct= 660, accuracy= 73.99%
+Digit 6: total= 958, correct= 567, accuracy= 59.19%
+Digit 7: total=1028, correct= 810, accuracy= 78.79%
+Digit 8: total= 974, correct= 439, accuracy= 45.07%
+Digit 9: total=1009, correct= 576, accuracy= 57.09%
+
+Overall accuracy: 5944/10000 = 59.44%
+Unrecognized (pred=None or invalid): 1
+
+BLOBS distribution
+rows=true digit, cols = 0, 1, 2, 3+
+      0     1     2    3+   total
+0:   127   852     1     0    980
+1:  1000     0     0     0   1000
+2:   727   271     2     0   1000
+3:   983    17     0     0   1000
+4:   922    60     0     0    982
+5:   877    15     0     0    892
+6:   269   686     3     0    958
+7:   999     1     0     0   1000
+8:    38   411   524     1    974
+9:   216   783     1     0   1000
+
+STEMS distribution
+rows=true digit, cols = 0, 1, 2, 3+
+      0     1     2    3+   total
+0:   850   129     1     0    980
+1:     0   997     3     0   1000
+2:     3   992     5     0   1000
+3:     1   990     9     0   1000
+4:    18   957     7     0    982
+5:     0   838    52     2    892
+6:    10   937    11     0    958
+7:     0   996     4     0   1000
+8:   589   334    51     0    974
+9:    73   922     5     0   1000

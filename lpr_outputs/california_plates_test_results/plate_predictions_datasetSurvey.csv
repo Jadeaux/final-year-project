@@ -1,0 +1,48 @@
+image_name,true_plate,pred_plate,exact_match,correct_chars,total_chars,digit_correct,digit_total,letter_correct,letter_total
+001.jpg,6LIK274,6LIK224,False,6,7,3,4,3,3
+006.jpg,4HRH954,4NRH954,False,6,7,4,4,2,3
+009.jpg,6UCP708,6UEP708,False,6,7,4,4,2,3
+013.jpg,7FPM906,7WPM906,False,6,7,4,4,2,3
+018.jpg,6TRJ244,6FRJ244,False,6,7,4,4,2,3
+042.jpg,3DKT279,3DKW279,False,6,7,4,4,2,3
+046.jpg,7MFL990,5MFL996,False,5,7,2,4,3,3
+048.jpg,7LYU892,2TTU892,False,4,7,3,4,1,3
+056.jpg,2GAT123,2?AT127,False,5,7,3,4,2,3
+061.jpg,6ZEM167,6?EM167,False,6,7,4,4,2,3
+070.jpg,3OEB058,7OEB058,False,6,7,3,4,3,3
+075.jpg,5VHM767,4VNM767,False,5,7,3,4,2,3
+079.jpg,8JBF273,8JBF273,True,7,7,4,4,3,3
+084.jpg,5AOJ230,1AOJ230,False,6,7,3,4,3,3
+087.jpg,6LNE878,6LNE878,True,7,7,4,4,3,3
+105.jpg,6MZF833,6MEF833,False,6,7,4,4,2,3
+109.jpg,6TRJ244,6TRJ244,True,7,7,4,4,3,3
+116.jpg,6WDG928,6WOF928,False,5,7,4,4,1,3
+121.jpg,5UMH719,4UNH719,False,5,7,3,4,2,3
+123.jpg,3RQS301,3RDE301,False,5,7,4,4,1,3
+127.jpg,3CRJ892,3CRJ892,True,7,7,4,4,3,3
+137.jpg,6SAM123,6EAW123,False,5,7,4,4,1,3
+140.jpg,5UVV683,5UVA683,False,6,7,4,4,2,3
+3.jpg,6SSA880,6SET880,False,5,7,4,4,1,3
+5.jpg,6VUU443,6VUV443,False,6,7,4,4,2,3
+plate12.png,8HGA946,8NGA946,False,6,7,4,4,2,3
+plate16.png,7WKF221,7WKF221,True,7,7,4,4,3,3
+plate20.png,8RPT146,8RPT146,True,7,7,4,4,3,3
+plate21.png,8WIF879,8WIF879,True,7,7,4,4,3,3
+plate22.png,7WMT913,7WMT913,True,7,7,4,4,3,3
+plate23.png,6EZW111,6KEV111,False,4,7,4,4,0,3
+plate24.png,6LNE878,6LNE878,True,7,7,4,4,3,3
+plate25.png,8RPT146,8RPT146,True,7,7,4,4,3,3
+plate27.png,7LBZ281,7LBE281,False,6,7,4,4,2,3
+plate28.png,8VHY069,8NHT069,False,5,7,4,4,1,3
+plate30.png,7RSV070,7RSV070,True,7,7,4,4,3,3
+plate31.png,8TRS777,8TRS777,True,7,7,4,4,3,3
+plate33.png,7KKJ901,7KKJ901,True,7,7,4,4,3,3
+plate35.png,3HUA172,3HUA172,True,7,7,4,4,3,3
+plate37.png,ISO8601,1SOB601,False,5,7,3,4,2,3
+
+
+Images evaluated:         40
+Exact plate accuracy:     35.00%
+Overall char accuracy:    85.71%
+Digit char accuracy:      93.75%
+Letter char accuracy:     75.00%
