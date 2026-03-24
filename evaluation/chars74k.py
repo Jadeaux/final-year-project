@@ -8,9 +8,9 @@ import os
 # =========================
 # IMPORT YOUR FUNCTIONS
 # =========================
-from modules.preprocessing import preprocess_step1, preprocess_letters, thin
-from modules.classification import classify_with_blobs_from_A
-from modules.classification_letters import classify_letter
+from pipeline.preprocessing import preprocess_step1, preprocess_letters, thin
+from pipeline.classification import classify_with_blobs_from_A
+from pipeline.classification_letters_california import classify_letter
 import matplotlib.pyplot as plt
 
 

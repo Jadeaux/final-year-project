@@ -18,10 +18,10 @@ import numpy as np
 import pandas as pd
 
 # ---- your pipeline imports (adjust if needed) ----
-from modules.preprocessing import preprocess_step1, thin
-from modules.morphology import find_blobs
-from modules.features import get_stems, get_banded_points, draw_line
-from modules.classification_original import classify_with_blobs_from_A  # (A -> digit, group)
+from pipeline.preprocessing import preprocess_step1, thin
+from pipeline.morphology import find_blobs
+from pipeline.features import get_stems, get_banded_points, draw_line
+from pipeline.classification_kumar import classify_with_blobs_from_A  # (A -> digit, group)
 from skimage.measure import label, regionprops
 
 

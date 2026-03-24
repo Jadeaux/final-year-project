@@ -7,14 +7,14 @@ import pandas as pd
 # ---- import YOUR pipeline ----
 # Adjust these imports to match your project structure.
 # If you're running this from inside "modules/", you might need:
-# from modules.preprocess_for_segmented import preprocess_letters
-# from modules.preprocessing import thin
-# from modules.classification_letters import classify_letter
+# from pipeline.preprocess_for_segmented import preprocess_letters
+# from pipeline.preprocessing import thin
+# from pipeline.classification_letters_california import classify_letter
 
-from modules.preprocess_for_segmented import preprocess_letters
-from modules.preprocessing import thin
-from modules.classification_letters_data import classify_letter
-from modules.features_letters import (
+from pipeline.preprocess_for_segmented import preprocess_letters
+from pipeline.preprocessing import thin
+from pipeline.classification_letters_california_synthetictest import classify_letter
+from pipeline.features_letters import (
     prune_spurs,
     count_endpoints,
     hole_count_and_largest_pct,

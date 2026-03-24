@@ -2,10 +2,10 @@ import cv2
 import numpy as np
 import os
 import matplotlib.pyplot as plt
-from .classification_kumar import classify_letter
-from .preprocess_for_segmented import preprocess_letters as preprocess_segmented
-from .preprocessing import thin
-from .features_letters import (
+from pipeline.classification_letters_CRAMM import classify_letter
+from pipeline.preprocess_for_segmented import preprocess_letters as preprocess_segmented
+from pipeline.preprocessing import thin
+from pipeline.features_letters import (
     concavity_tb_strength, concavity_lr_strength,
     count_horizontal_strokes, debug_endpoints, debug_horizontal_strokes,
     horizontal_symmetry_tb_balance, prune_spurs, count_endpoints,
@@ -1139,8 +1139,8 @@ cv2.destroyAllWindows()
 
 
 #-------------COMMENT---------------
-from .morphology import find_blobs
-from .features import get_stems, get_banded_points, draw_line
+from pipeline.morphology import find_blobs
+from pipeline.features import get_stems, get_banded_points, draw_line
 
 def debug_digit_steps(A, title="digit-debug"):
     """
@@ -1234,7 +1234,7 @@ def debug_digit_steps(A, title="digit-debug"):
         plt.subplot(1,2,2); plt.imshow(blobs3, cmap="gray"); plt.title("blobs3"); plt.axis("off")
         plt.tight_layout(); plt.show()
 
-from .classification import classify_with_blobs_from_A
+from pipeline.classification import classify_with_blobs_from_A
 
 def char_type_from_index(i: int) -> str:
     if i < 3:

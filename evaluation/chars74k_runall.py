@@ -5,9 +5,9 @@ import numpy as np
 import pandas as pd
 from sklearn.metrics import confusion_matrix, classification_report
 
-from modules.preprocessing_chars import preprocess_step1, preprocess_letters, thin
-from modules.classification import classify_with_blobs_from_A
-from modules.classification_letters import classify_letter
+from pipeline.preprocessing_chars import preprocess_step1, preprocess_letters, thin
+from pipeline.classification import classify_with_blobs_from_A
+from pipeline.classification_letters_california import classify_letter
 
 ROOT = r"E:\EnglishImg (1)\English\Img\GoodImg\Bmp"
 OUT_DIR = r"E:\chars74k_eval_after_fix"

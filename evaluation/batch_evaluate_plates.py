@@ -3,7 +3,7 @@ import pandas as pd
 import cv2
 from sklearn.metrics import confusion_matrix
 
-from modules.license_plate_cars import recognize_plate
+from pipeline.license_plate_cars import recognize_plate
 
 GT_CSV = r"images/plates/plates_dataset/ground_truth.csv"
 OUT_RESULTS = r"images/plates/plates_dataset/plates_results/results.csv"

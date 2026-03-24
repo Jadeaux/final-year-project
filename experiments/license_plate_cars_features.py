@@ -2,11 +2,11 @@ import cv2
 import numpy as np
 import os
 import matplotlib.pyplot as plt
-from modules.classification_letters import classify_letter
-from modules.preprocess_for_segmented import preprocess_letters as preprocess_segmented
-from modules.preprocessing import thin
-from modules.features_letters import concavity_tb_strength, concavity_lr_strength, count_horizontal_strokes, debug_endpoints, debug_horizontal_strokes, horizontal_symmetry_tb_balance, prune_spurs, count_endpoints, hole_count_and_largest_pct, vertical_symmetry_lr_balance, count_vertical_strokes, bottom_width_ratio, center_density_ratio, debug_vertical_strokes, debug_bottom_width_ratio, side_open_score
-from modules.classification import classify_with_blobs_from_A
+from pipeline.classification_letters_california import classify_letter
+from pipeline.preprocess_for_segmented import preprocess_letters as preprocess_segmented
+from pipeline.preprocessing import thin
+from pipeline.features_letters import concavity_tb_strength, concavity_lr_strength, count_horizontal_strokes, debug_endpoints, debug_horizontal_strokes, horizontal_symmetry_tb_balance, prune_spurs, count_endpoints, hole_count_and_largest_pct, vertical_symmetry_lr_balance, count_vertical_strokes, bottom_width_ratio, center_density_ratio, debug_vertical_strokes, debug_bottom_width_ratio, side_open_score
+from pipeline.classification import classify_with_blobs_from_A
 OUT_DIR = "lpr_outputs/debug"
 os.makedirs(OUT_DIR, exist_ok=True)
 

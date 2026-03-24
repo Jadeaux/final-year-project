@@ -2,11 +2,11 @@ import cv2
 import numpy as np
 import os
 import matplotlib.pyplot as plt
-from .classification_kumar import classify_letter
+from .classification_letters_CRAMM import classify_letter
 from .preprocess_for_segmented import preprocess_letters as preprocess_segmented
 from .preprocessing import thin
 from .features_letters import concavity_tb_strength, concavity_lr_strength, count_horizontal_strokes, debug_endpoints, debug_horizontal_strokes, horizontal_symmetry_tb_balance, prune_spurs, count_endpoints, hole_count_and_largest_pct, vertical_symmetry_lr_balance, count_vertical_strokes, bottom_width_ratio, center_density_ratio, debug_vertical_strokes, debug_bottom_width_ratio, side_open_score
-from .classification_original import classify_with_blobs_from_A
+from .classification_kumar import classify_with_blobs_from_A
 OUT_DIR = "lpr_outputs/debug"
 os.makedirs(OUT_DIR, exist_ok=True)
 

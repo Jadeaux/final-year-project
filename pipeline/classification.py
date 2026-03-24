@@ -5,7 +5,7 @@ Handles digit classification using morphological features.
 import matplotlib.pyplot as plt
 import numpy as np
 from skimage.measure import label, regionprops
-from preprocessing import preprocess_step1, thin
+from .preprocessing import preprocess_step1, thin
 from .morphology import find_blobs
 from .features import get_stems, get_banded_points, draw_line
 
@@ -55,6 +55,9 @@ def classify_group1(A, blobs, n_blobs):
                 return 6
             else:
                 return 9
+            
+        if n_stems == 2:
+            return 4
 
     # Any other pattern → not handled here
     return None
@@ -152,13 +155,19 @@ def classify_group2(A, visualize=False):
     # ---- Case 1: No blobs after TL->BL → digit is 1 or 4 ----
     if nb1 == 0:
         # Draw TL->BR diagonal
+        A2 = draw_line(A, TL, BR)
+        blobs2, nb2 = find_blobs(A2)
+
         if visualize:
             plt.figure(figsize=(6, 3))
             plt.subplot(1, 2, 1); plt.imshow(A2, cmap='gray');   plt.title("After TL→BR line"); plt.axis('off')
             plt.subplot(1, 2, 2); plt.imshow(blobs2, cmap='gray'); plt.title(f"Blobs after TL→BR (n={nb2})"); plt.axis('off')
             plt.tight_layout(); plt.show()
 
-        return 4  # diagonal created a blob → 4
+        if nb2 == 0:
+            return 1
+        else:
+            return 4  # diagonal created a blob → 4
 
     # ---- Case 2: Blobs appear after TL->BL → {2,5,3,7} ----
     stems_img, n_stems, stem_cents = get_stems(A1, blobs1)
@@ -191,11 +200,12 @@ def classify_group2(A, visualize=False):
 
     # 2b) No stems after TL->BL + blobs → {3,7}
     A3 = draw_line(A, TR, BR)
-    blobs3, nb3 = find_blobs(A3, min_blob_area=100)
+    blobs3, nb3 = find_blobs(A3, min_blob_area=30)
     lab = label(blobs3, connectivity=2)
     props = regionprops(lab)
     print("nb3 =", nb3)
     if len(props) == 1:
+        print("DEBUGGING =", props[0].area)
         print("blob area =", props[0].area)
     else:
         print("areas =", [p.area for p in props])
@@ -254,7 +264,38 @@ def classify_with_blobs(img, visualize=True):
         plt.tight_layout(); plt.show()
         print("Predicted:", digit, "|", group)
 
-    return digit
+    return digit, group
+
+'''
+def classify_with_blobs(img, visualize=True):
+    A, cropped_vis, _ = preprocess_step1(img, visualize=False)
+
+    A_thin = thin(A)
+
+    # blobs on THICK binary
+    blobs, n_blobs = find_blobs(A)
+
+    if n_blobs > 0:
+        digit = classify_group1(A_thin, blobs, n_blobs)
+        group = "Group 1"
+    else:
+        digit = classify_group2(A_thin, visualize=visualize)
+        group = "Group 2"
+
+    if visualize:
+        plt.figure(figsize=(9,2.5))
+        plt.subplot(1,3,1); plt.imshow(cropped_vis, cmap='gray'); plt.title('Cropped'); plt.axis('off')
+        plt.subplot(1,3,2); plt.imshow(A_thin, cmap='gray'); plt.title('Thinned'); plt.axis('off')
+        plt.subplot(1,3,3); plt.imshow(blobs, cmap='gray'); plt.title(f'Blobs at start (n={n_blobs})'); plt.axis('off')
+        plt.tight_layout(); plt.show()
+        print("Predicted:", digit, "|", group)
+
+    return digit, group
+'''
+import numpy as np
+from skimage.measure import label, regionprops
+from .morphology import find_blobs
+from .features import get_stems
 
 def summarize_blobs_and_stems(A_thin, tag=""):
     blobs, n_blobs = find_blobs(A_thin)

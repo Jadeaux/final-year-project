@@ -5,7 +5,7 @@ Handles digit classification using morphological features.
 import matplotlib.pyplot as plt
 import numpy as np
 from skimage.measure import label, regionprops
-from preprocessing import preprocess_step1, thin
+from .preprocessing import preprocess_step1, thin
 from .morphology import find_blobs
 from .features import get_stems, get_banded_points, draw_line
 
@@ -36,9 +36,6 @@ def classify_group1(A, blobs, n_blobs):
         if n_stems == 0:
             return 0
 
-        # 1 blob + >=2 stems → 4
-        if n_stems >= 2:
-            return 4
 
         # 1 blob + 1 stem → 6 or 9, depending on vertical position
         if n_stems == 1:
@@ -58,22 +55,29 @@ def classify_group1(A, blobs, n_blobs):
                 return 6
             else:
                 return 9
+            
+        if n_stems == 2:
+            return 4
 
     # Any other pattern → not handled here
     return None
 def classify_with_blobs_from_A(A, visualize=False, debug=False):
     A_thin = thin(A)
 
+    # 1) Decide group using THICK blobs (as you want for plates)
+    blobs_thick, n_blobs_thick = find_blobs(A)
+
     if debug:
-        summarize_blobs_and_stems(A_thin, tag="INSIDE classify_with_blobs_from_A (after thin)")
+        print(f"[INSIDE] thick blobs = {n_blobs_thick}")
 
-    blobs, n_blobs = find_blobs(A) #put it on thin
-
-    if n_blobs > 0:
-        digit = classify_group1(A, blobs, n_blobs)
+    if n_blobs_thick > 0:
+        # 2) For Group 1, do stems/topology on THIN (more stable)
+        blobs_thin, n_blobs_thin = find_blobs(A_thin)
+        digit = classify_group1(A_thin, blobs_thin, n_blobs_thick)
         group = "Group 1"
     else:
-        digit = classify_group2(A, visualize=visualize)
+        # 3) For Group 2, ALL helper-line + stems logic must be on THIN
+        digit = classify_group2(A_thin, visualize=visualize)
         group = "Group 2"
 
     if debug:
@@ -131,7 +135,6 @@ def classify_group2(A, visualize=False):
 
     # TL->BL (leftmost above mid to leftmost below mid)
     A1 = draw_line(A, TL, BL)
-
     blobs1, nb1 = find_blobs(A1)
 
     if visualize:
@@ -162,7 +165,7 @@ def classify_group2(A, visualize=False):
             plt.tight_layout(); plt.show()
 
         if nb2 == 0:
-            return 1  # still no blobs → 1
+            return 1
         else:
             return 4  # diagonal created a blob → 4
 
@@ -194,8 +197,21 @@ def classify_group2(A, visualize=False):
 
     # 2b) No stems after TL->BL + blobs → {3,7}
     A3 = draw_line(A, TR, BR)
-    blobs3, nb3 = find_blobs(A3, min_blob_area=3)
+    blobs3, nb3 = find_blobs(A3, min_blob_area=30)
+    lab = label(blobs3, connectivity=2)
+    props = regionprops(lab)
+    print("nb3 =", nb3)
+    if len(props) == 1:
+        print("DEBUGGING =", props[0].area)
+        print("blob area =", props[0].area)
+    else:
+        print("areas =", [p.area for p in props])
 
+    if nb3 > 0:
+        for i, p in enumerate(props):
+            print(f"Blob {i+1} area:", p.area)
+    else:
+        print("No blobs detected.")
     if visualize:
         plt.figure(figsize=(9, 3))
         plt.subplot(1, 3, 1); plt.imshow(A, cmap='gray');  plt.title("A (input)"); plt.axis('off')
@@ -275,8 +291,8 @@ def classify_with_blobs(img, visualize=True):
 '''
 import numpy as np
 from skimage.measure import label, regionprops
-from modules.morphology import find_blobs
-from modules.features import get_stems
+from .morphology import find_blobs
+from .features import get_stems
 
 def summarize_blobs_and_stems(A_thin, tag=""):
     blobs, n_blobs = find_blobs(A_thin)

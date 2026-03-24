@@ -5,7 +5,7 @@ import random
 import cv2
 import numpy as np
 
-from modules.preprocessing_chars import preprocess_step1, preprocess_letters
+from pipeline.preprocessing_chars import preprocess_step1, preprocess_letters
 
 # =========================================================
 # CONFIG

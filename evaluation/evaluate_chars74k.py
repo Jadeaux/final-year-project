@@ -21,10 +21,10 @@ import pandas as pd
 
 from skimage.measure import label, regionprops
 
-from modules.preprocessing_chars import preprocess_step1, thin
-from modules.morphology_chars import find_blobs
-from modules.features import get_stems, get_banded_points, draw_line
-from modules.classification_original import classify_with_blobs_from_A
+from pipeline.preprocessing_chars import preprocess_step1, thin
+from pipeline.morphology_chars import find_blobs
+from pipeline.features import get_stems, get_banded_points, draw_line
+from pipeline.classification_kumar import classify_with_blobs_from_A
 
 
 # =========================================================

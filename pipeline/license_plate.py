@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 import os
 import matplotlib.pyplot as plt
-from .classification_letters import classify_letter
+from .classification_letters_california import classify_letter
 from .preprocess_for_segmented import preprocess_letters as preprocess_segmented
 from .preprocessing import thin
 from .features_letters import concavity_tb_strength, concavity_lr_strength, count_horizontal_strokes, debug_endpoints, debug_horizontal_strokes, horizontal_symmetry_tb_balance, prune_spurs, count_endpoints, hole_count_and_largest_pct, vertical_symmetry_lr_balance, count_vertical_strokes, bottom_width_ratio, center_density_ratio, debug_vertical_strokes, debug_bottom_width_ratio, side_open_score

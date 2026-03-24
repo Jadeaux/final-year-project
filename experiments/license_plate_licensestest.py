@@ -2,17 +2,17 @@ import cv2
 import numpy as np
 import os
 import matplotlib.pyplot as plt
-from .classification_letters import classify_letter
-from .preprocess_for_segmented import preprocess_letters as preprocess_segmented
-from .preprocessing import thin
-from .features_letters import concavity_tb_strength, concavity_lr_strength, count_horizontal_strokes, debug_endpoints, debug_horizontal_strokes, horizontal_symmetry_tb_balance, prune_spurs, count_endpoints, hole_count_and_largest_pct, vertical_symmetry_lr_balance, count_vertical_strokes, bottom_width_ratio, center_density_ratio, debug_vertical_strokes, debug_bottom_width_ratio, side_open_score
+from pipeline.classification_letters_california import classify_letter
+from pipeline.preprocess_for_segmented import preprocess_letters as preprocess_segmented
+from pipeline.preprocessing import thin
+from pipeline.features_letters import concavity_tb_strength, concavity_lr_strength, count_horizontal_strokes, debug_endpoints, debug_horizontal_strokes, horizontal_symmetry_tb_balance, prune_spurs, count_endpoints, hole_count_and_largest_pct, vertical_symmetry_lr_balance, count_vertical_strokes, bottom_width_ratio, center_density_ratio, debug_vertical_strokes, debug_bottom_width_ratio, side_open_score
 import glob
 import cv2
 import numpy as np
-from .classification import classify_with_blobs_from_A
+from pipeline.classification import classify_with_blobs_from_A
 
-from .morphology import find_blobs
-from .features import get_stems, get_banded_points, draw_line
+from pipeline.morphology import find_blobs
+from pipeline.features import get_stems, get_banded_points, draw_line
 
 OUT_DIR = "lpr_outputs/debug_plate"
 os.makedirs(OUT_DIR, exist_ok=True)

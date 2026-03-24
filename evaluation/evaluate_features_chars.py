@@ -4,10 +4,10 @@ import cv2
 import numpy as np
 import pandas as pd
 
-from modules.preprocess_for_segmented import preprocess_letters
-from modules.preprocessing import thin
-from modules.classification_letters import classify_letter
-from modules.features_letters import (
+from pipeline.preprocess_for_segmented import preprocess_letters
+from pipeline.preprocessing import thin
+from pipeline.classification_letters_california import classify_letter
+from pipeline.features_letters import (
     prune_spurs,
     count_endpoints,
     hole_count_and_largest_pct,
