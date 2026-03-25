@@ -321,7 +321,7 @@ def char_type_from_index(i: int) -> str:
 # STEP 1: LOCALISE PLATE
 # =========================================================
 
-def localise_plate(img):
+def localise_plate(img, debug=True):
     """
     Locate the license plate in a full car image.
     Returns the extracted plate ROI (BGR), or None if no plate found.
@@ -329,9 +329,10 @@ def localise_plate(img):
     H, W = img.shape[:2]
     print("Loaded image shape:", img.shape)
 
-    cv2.imshow("00_input", img)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
+    if debug:
+        cv2.imshow("00_input", img)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
 
     # --- Build a plate-like blob from intensity structure (better than Sobel) ---
 
@@ -342,12 +343,14 @@ def localise_plate(img):
     k_bh = cv2.getStructuringElement(cv2.MORPH_RECT, (25, 7))
     blackhat = cv2.morphologyEx(gray, cv2.MORPH_BLACKHAT, k_bh)
 
-    cv2.imshow("bh", blackhat); cv2.waitKey(0)
+    if debug:
+        cv2.imshow("bh", blackhat); cv2.waitKey(0)
 
     # 2) Threshold it
     _, bw = cv2.threshold(blackhat, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
 
-    cv2.imshow("bw_bh", bw); cv2.waitKey(0)
+    if debug:
+        cv2.imshow("bw_bh", bw); cv2.waitKey(0)
 
     # 3) Now make it a SOLID PLATE BLOB (this is the missing part)
     # close horizontally to connect characters into one band
@@ -358,7 +361,8 @@ def localise_plate(img):
     k_dil = cv2.getStructuringElement(cv2.MORPH_RECT, (7, 3))
     bw = cv2.dilate(bw, k_dil, iterations=1)
 
-    cv2.imshow("bw_plate_blob", bw); cv2.waitKey(0)
+    if debug:
+        cv2.imshow("bw_plate_blob", bw); cv2.waitKey(0)
 
     # 4) Only now apply your ROI band + border kill (optional)
     margin = 10
@@ -373,21 +377,21 @@ def localise_plate(img):
     mask_roi[y_start:y_end, :] = 255
     bw = cv2.bitwise_and(bw, mask_roi)
 
-    cv2.imshow("03c_bw_band", bw)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
-
-    cv2.imwrite(f"{OUT_DIR}/03b_bw_noborder.png", bw)
+    if debug:
+        cv2.imshow("03c_bw_band", bw)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
+        cv2.imwrite(f"{OUT_DIR}/03b_bw_noborder.png", bw)
 
     # 04: morphology close tuned to avoid vertical bridging
     kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (35, 3))
     morph = cv2.morphologyEx(bw, cv2.MORPH_CLOSE, kernel, iterations=2)
 
-    cv2.imwrite(f"{OUT_DIR}/04_morph.png", morph)
-
-    cv2.imshow("04_morph", morph)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
+    if debug:
+        cv2.imwrite(f"{OUT_DIR}/04_morph.png", morph)
+        cv2.imshow("04_morph", morph)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
 
     contours, _ = cv2.findContours(morph, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
@@ -402,9 +406,10 @@ def localise_plate(img):
         print(f"x={x}, y={y}, w={w}, h={h}, ar={ar:.2f}, area={area}")
         cv2.rectangle(vis, (x,y), (x+w, y+h), (0,255,0), 2)
 
-    cv2.imshow("05_all_contours", vis)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
+    if debug:
+        cv2.imshow("05_all_contours", vis)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
 
     best = None
     best_score = -1
@@ -453,15 +458,15 @@ def localise_plate(img):
     )
 
     print("ROI shape (post-norm):", plate_roi.shape, "| scale:", scale)
-    cv2.imwrite("lpr_outputs/plates/plate1_roi.png", plate_roi)
 
-    vis2 = img.copy()
-    cv2.rectangle(vis2, (x,y), (x+w, y+h), (0,0,255), 3)
-
-    cv2.imshow("07_chosen_plate", vis2)
-    cv2.imshow("07_plate_roi", plate_roi)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
+    if debug:
+        cv2.imwrite("lpr_outputs/plates/plate1_roi.png", plate_roi)
+        vis2 = img.copy()
+        cv2.rectangle(vis2, (x,y), (x+w, y+h), (0,0,255), 3)
+        cv2.imshow("07_chosen_plate", vis2)
+        cv2.imshow("07_plate_roi", plate_roi)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
 
     return plate_roi
 
@@ -470,7 +475,7 @@ def localise_plate(img):
 # STEP 2: SEGMENT PLATE
 # =========================================================
 
-def segment_plate(plate_roi):
+def segment_plate(plate_roi, debug=True):
     """
     Segment a plate ROI into individual character images.
     Returns a list of normalized 96x96 uint8 character images.
@@ -506,19 +511,22 @@ def segment_plate(plate_roi):
         plate_roi = plate_roi[y0:y1+1, x0:x1+1]
         chars     = chars[y0:y1+1, x0:x1+1]
 
-    cv2.imshow("plate_roi_tight", plate_roi)
-    cv2.imshow("chars_mask_tight", chars)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
+    if debug:
+        cv2.imshow("plate_roi_tight", plate_roi)
+        cv2.imshow("chars_mask_tight", chars)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
 
     k = cv2.getStructuringElement(cv2.MORPH_RECT, (2,2))
     chars = cv2.morphologyEx(chars, cv2.MORPH_CLOSE, k, iterations=1)
 
-    cv2.imwrite("lpr_outputs/debug/plate1_chars.png", chars)
+    if debug:
+        cv2.imwrite("lpr_outputs/debug/plate1_chars.png", chars)
 
-    cv2.imshow("08_chars_mask", chars)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
+    if debug:
+        cv2.imshow("08_chars_mask", chars)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
 
     # --- Robustly find the main character band (big letters) ---
 
@@ -560,10 +568,11 @@ def segment_plate(plate_roi):
     plate_refined = plate_roi[top:bottom+1, :]
     chars_refined = chars[top:bottom+1, :]
 
-    cv2.imshow("refined_roi", plate_refined)
-    cv2.imshow("refined_chars", chars_refined)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
+    if debug:
+        cv2.imshow("refined_roi", plate_refined)
+        cv2.imshow("refined_chars", chars_refined)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
 
 
     #########horizonal
@@ -619,10 +628,11 @@ def segment_plate(plate_roi):
 
     print("CC left/right:", left, right, "min_h:", min_h, "max_h:", max_h)
 
-    cv2.imshow("final_zoom_roi", plate_final)
-    cv2.imshow("final_zoom_chars", chars_final)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
+    if debug:
+        cv2.imshow("final_zoom_roi", plate_final)
+        cv2.imshow("final_zoom_chars", chars_final)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
 
     # --- Left/right crop using CC on chars_refined ---
     hR, wR = chars_refined.shape
@@ -672,7 +682,8 @@ def segment_plate(plate_roi):
         if stats[i, cv2.CC_STAT_AREA] >= min_area:
             den[labels == i] = 255
 
-    cv2.imshow("den", den); cv2.waitKey(0)
+    if debug:
+        cv2.imshow("den", den); cv2.waitKey(0)
 
     # ---- 2) Create ONE BIG WORD BLOB (horizontal close)
     # Wide kernel connects characters across gaps but doesn't prefer vertical merging much.
@@ -682,7 +693,8 @@ def segment_plate(plate_roi):
     # Optional: small dilation makes it more solid
     blob = cv2.dilate(blob, cv2.getStructuringElement(cv2.MORPH_RECT, (5,3)), iterations=1)
 
-    cv2.imshow("blob", blob); cv2.waitKey(0)
+    if debug:
+        cv2.imshow("blob", blob); cv2.waitKey(0)
 
     # ---- 3) Pick best blob rectangle (like localisation) and crop
     contours, _ = cv2.findContours(blob, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
@@ -730,14 +742,16 @@ def segment_plate(plate_roi):
         x1 = min(W, x + w + pad); y1 = min(H, y + h + pad)
         word_crop = den[y0:y1, x0:x1]
 
-    cv2.imshow("word_crop", word_crop); cv2.waitKey(0)
+    if debug:
+        cv2.imshow("word_crop", word_crop); cv2.waitKey(0)
 
 
     print("CC left/right:", left, right, "min_h:", min_h, "max_h:", max_h)
 
-    cv2.imshow("final_zoom_chars", chars_final)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
+    if debug:
+        cv2.imshow("final_zoom_chars", chars_final)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
 
     # 1) DENOISE first: keep only CCs above area threshold
     h, w = chars_final.shape
@@ -753,14 +767,16 @@ def segment_plate(plate_roi):
 
     bin255 = chars_denoised  # <-- THIS is the mask you want to blob
 
-    cv2.imshow("chars_denoised", bin255); cv2.waitKey(0)
+    if debug:
+        cv2.imshow("chars_denoised", bin255); cv2.waitKey(0)
 
     # 2) Create "word blob" by connecting letters horizontally
     k = cv2.getStructuringElement(cv2.MORPH_RECT, (25, 5))
     blob = cv2.morphologyEx(bin255, cv2.MORPH_CLOSE, k, iterations=1)
     blob = cv2.dilate(blob, cv2.getStructuringElement(cv2.MORPH_RECT, (7,3)), iterations=1)
 
-    cv2.imshow("word_blob_candidates", blob); cv2.waitKey(0)
+    if debug:
+        cv2.imshow("word_blob_candidates", blob); cv2.waitKey(0)
 
     # 3) Find best rectangle candidate on the blob
     contours, _ = cv2.findContours(blob, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
@@ -810,7 +826,8 @@ def segment_plate(plate_roi):
         word_mask = np.zeros_like(bin255)
         word_mask[y0:y1, x0:x1] = bin255[y0:y1, x0:x1]
 
-    cv2.imshow("word_mask_kept", word_mask); cv2.waitKey(0)
+    if debug:
+        cv2.imshow("word_mask_kept", word_mask); cv2.waitKey(0)
 
     for i in range(1, num):
         area = stats[i, cv2.CC_STAT_AREA]
@@ -818,16 +835,19 @@ def segment_plate(plate_roi):
             chars_denoised[labels == i] = 255
 
 
-    cv2.imshow("chars_denoised", chars_denoised)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
+    if debug:
+        cv2.imshow("chars_denoised", chars_denoised)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
     #------removed the lines by calculating the distances between neighbors
 
     chars_clean = keep_main_plate_chars(chars_denoised)  # or chars_final / chars_denoised
-    cv2.imshow("chars_clean", chars_clean); cv2.waitKey(0)
+    if debug:
+        cv2.imshow("chars_clean", chars_clean); cv2.waitKey(0)
 
     chars_clean = bridge_gaps(chars_clean)
-    cv2.imshow("chars_clean_bridged", chars_clean); cv2.waitKey(0)
+    if debug:
+        cv2.imshow("chars_clean_bridged", chars_clean); cv2.waitKey(0)
 
     img_bin = chars_clean.copy()
     h, w = img_bin.shape
@@ -852,9 +872,10 @@ def segment_plate(plate_roi):
 
     clean_word = img_bin[:, left:right+1]
 
-    cv2.imshow("clean_word_only", clean_word)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
+    if debug:
+        cv2.imshow("clean_word_only", clean_word)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
 
     img_bin = clean_word.copy()
     h, w = img_bin.shape
@@ -879,9 +900,10 @@ def segment_plate(plate_roi):
 
         out[labels == i] = 255
 
-    cv2.imshow("chars_only_rect_filter", out)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
+    if debug:
+        cv2.imshow("chars_only_rect_filter", out)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
 
     # out = chars_only_rect_filter result (0/255)
     mask = (out > 0).astype(np.uint8) * 255
@@ -899,9 +921,10 @@ def segment_plate(plate_roi):
 
     mask_tight = mask[y0:y1+1, x0:x1+1]
 
-    cv2.imshow("chars_mask_tight", mask_tight)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
+    if debug:
+        cv2.imshow("chars_mask_tight", mask_tight)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
 
     # 2) "Rectangle again" but DONE RIGHT: merge letters slightly then pick best contour rectangle
     # (This finds the center region and kills left/right junk.)
@@ -950,9 +973,10 @@ def segment_plate(plate_roi):
         word_mask = np.zeros_like(mask_tight)
         word_mask[y0:y1, x0:x1] = mask_tight[y0:y1, x0:x1]
 
-    cv2.imshow("word_mask", word_mask)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
+    if debug:
+        cv2.imshow("word_mask", word_mask)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
 
     # 3) Character segmentation from word_mask
     img_bin = word_mask
@@ -1008,10 +1032,13 @@ def segment_plate(plate_roi):
         char_img = cv2.morphologyEx(char_img, cv2.MORPH_CLOSE, k2, iterations=1)
 
         processed_chars.append(char_img)
-        cv2.imshow(f"char_processed_{i}", char_img)
+        if debug:
+            cv2.imshow(f"char_processed_{i}", char_img)
 
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
+    if debug:
+        cv2.waitKey(0)
+    if debug:
+        cv2.destroyAllWindows()
 
 
     # ---------------------------------------
@@ -1043,10 +1070,13 @@ def segment_plate(plate_roi):
                              interpolation=cv2.INTER_NEAREST)
 
         normalized_chars.append(resized)
-        cv2.imshow(f"char_norm_{i}", resized)
+        if debug:
+            cv2.imshow(f"char_norm_{i}", resized)
 
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
+    if debug:
+        cv2.waitKey(0)
+    if debug:
+        cv2.destroyAllWindows()
 
     return normalized_chars
 
@@ -1055,7 +1085,7 @@ def segment_plate(plate_roi):
 # STEP 3: RECOGNIZE PLATE
 # =========================================================
 
-def recognize_plate(normalized_chars):
+def recognize_plate(normalized_chars, debug=True):
     """
     Classify each segmented character and return the plate text string.
     """
@@ -1069,12 +1099,13 @@ def recognize_plate(normalized_chars):
         print(f"Processing plate char index: {idx} | type={ctype}")
         print("===================================")
 
-        cv2.imshow("INPUT_TO_CLASSIFIER", char_img)
-        cv2.waitKey(0)
-        cv2.destroyAllWindows()
+        if debug:
+            cv2.imshow("INPUT_TO_CLASSIFIER", char_img)
+            cv2.waitKey(0)
+            cv2.destroyAllWindows()
 
         # 1) ONE preprocess for both digit/letter
-        A, cleaned, bin_norm = preprocess_segmented(char_img, visualize=True, plate_mode=True)
+        A, cleaned, bin_norm = preprocess_segmented(char_img, visualize=debug, plate_mode=True)
 
         # skeleton always computed (you want debug visuals anyway)
         skel = thin(A)
@@ -1085,8 +1116,8 @@ def recognize_plate(normalized_chars):
             # -----------------------
             # DIGIT CLASSIFICATION
             # -----------------------
-            digit, group = classify_with_blobs_from_A(A, debug=True)
-            if ctype == "digit":
+            digit, group = classify_with_blobs_from_A(A, debug=debug)
+            if debug and ctype == "digit":
                 debug_digit_steps(A, title=f"plate idx={idx} pred={digit} group={group}")
             pred = str(digit) if digit is not None else "?"
             plate_text += pred
@@ -1131,18 +1162,19 @@ def recognize_plate(normalized_chars):
             print(f"west={west:.3f} | east={east:.3f}")
 
             # --- Your debug visuals ---
-            debug_endpoints(sk_pruned)
-            debug_vertical_strokes(A, min_frac=0.7, gap_allow=2, support_cols=3, orient_thresh=0.12)
-            debug_horizontal_strokes(A, min_frac=0.8, gap_allow=2, band=5, support_rows=3,
-                                     orient_thresh=0.12, rel_width_keep=0.80)
+            if debug:
+                debug_endpoints(sk_pruned)
+                debug_vertical_strokes(A, min_frac=0.7, gap_allow=2, support_cols=3, orient_thresh=0.12)
+                debug_horizontal_strokes(A, min_frac=0.8, gap_allow=2, band=5, support_rows=3,
+                                         orient_thresh=0.12, rel_width_keep=0.80)
 
         # always show skeletons (both digit & letter)
-        cv2.imshow("SKEL", (skel * 255).astype(np.uint8))
-        cv2.imshow("SKEL_PRUNED", (sk_pruned * 255).astype(np.uint8))
-        cv2.waitKey(0)
-        cv2.destroyAllWindows()
-
-        plt.close("all")
+        if debug:
+            cv2.imshow("SKEL", (skel * 255).astype(np.uint8))
+            cv2.imshow("SKEL_PRUNED", (sk_pruned * 255).astype(np.uint8))
+            cv2.waitKey(0)
+            cv2.destroyAllWindows()
+            plt.close("all")
 
     return plate_text
 
